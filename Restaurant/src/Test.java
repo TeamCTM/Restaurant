@@ -9,22 +9,56 @@ public class Test {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         frame.pack();
-        frame.getContentPane().setBackground(Color.RED);
-        frame.getContentPane().add(new Canvas());
+        frame.getContentPane().setBackground(Color.lightGray);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setVisible(true);
+        
+        String input = "";
+        
+        String rex = "^[1-9]\\d*$";
+       
+        do{
+         input = JOptionPane.showInputDialog(frame  ,"How many Tables?:");
+        }while(!input.matches(rex));
+        
+        int number = Integer.parseInt(input);
+        
+        for(int i = 0; i < number; i++)
+        {
+        	frame.getGraphics().drawRect((i*205), 0, 200, 200);
+        }
+        
         frame.setVisible(true);
         
 	}
 }
 
-class Canvas extends JComponent
+class Table extends JPanel {
+	private int _x, _y;
+	
+		public Table(int x, int y)
+		{
+			_x = x;
+			_y = y;
+		}
+		
+	  protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);  
+	    g.drawRect(_x,_y,50,50);  
+	    g.setColor(Color.BLUE);  
+	    g.fillRect(_x,_y,50,50);  
+	  }
+	}
+
+/*
+class Table extends JComponent
 {
 	public void paint(Graphics g){
 		//g.setBackground(Color.BLUE);
 		//g.setFillColor(Color.CYAN);
 		g.setColor(Color.BLUE);
-		
 		g.drawRect(10, 10, 200, 800);
 
 	}
 }
+*/
