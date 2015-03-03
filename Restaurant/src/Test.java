@@ -3,13 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Test {
-
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+      
+
         frame.pack();
-        frame.getContentPane().setBackground(Color.lightGray);
+        frame.getContentPane().setBackground(new Color(200,100,30));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         
@@ -18,7 +19,7 @@ public class Test {
         String rex = "^[1-9]\\d*$";
        
         do{
-         input = JOptionPane.showInputDialog(frame  ,"How many Tables?:");
+         input = JOptionPane.showInputDialog(frame  ,"How many tables are in your restaurant?:");
         }while(!input.matches(rex));
         
         int number = Integer.parseInt(input);
@@ -35,6 +36,7 @@ public class Test {
 
 class Table extends JPanel {
 	private int _x, _y;
+
 	
 		public Table(int x, int y)
 		{
@@ -45,10 +47,30 @@ class Table extends JPanel {
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);  
 	    g.drawRect(_x,_y,50,50);  
-	    g.setColor(Color.BLUE);  
+	    g.setColor(Color.BLACK);  
+	    g.setColor(Color.RED);
 	    g.fillRect(_x,_y,50,50);  
 	  }
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 class Table extends JComponent
