@@ -16,7 +16,7 @@ public class ManagerAction {
 		
 	Scanner user_input=new Scanner(System.in);
 	int _total;
-	_total=user_input.next();
+	_total= user_input.next();
 	String _familyName;
 	
 
