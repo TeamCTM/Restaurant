@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+//Madhu: We should rename this 'table' and 'tableTest' 
+
 public class Test {
 	
 	public static void main(String[] args) {
