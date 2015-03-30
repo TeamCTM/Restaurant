@@ -1,6 +1,10 @@
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.event.*;
 import java.io.File;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,9 +12,9 @@ import javax.swing.*;
 //Madhu: We should rename this 'table' and 'tableTest' 
 
 public class Test {
-	
+	static JFrame frame;
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Resturant Management v1.0");
+		 frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       
 
@@ -40,29 +44,76 @@ public class Test {
         maind.setBackground(Color.CYAN);
         
        // frame.getContentPane().add(mainp);
-        frame.getContentPane().add(new Table(10,10));
-        frame.getContentPane().add(new Table(10,200));
-        frame.getContentPane().add(new Table(10,200));
+       // frame.getContentPane().add(new Table(10,10));
+       // frame.getContentPane().add(new Table(10,200));
+       // frame.getContentPane().add(new Table(10,200));
+        
+
+        frame.addMouseListener(new PopupTriggerListener());
+        
+        //frame.getContentPane().add(jScrollPane);
         frame.repaint();
         
 	}
 }
 
+class SayHello extends TimerTask {
+	private Table _panel;
+	public SayHello(JPanel aPanel)
+	{
+		
+	}
+    public void run() {
+       System.out.println("Hello World!"); 
+    }
+ }
+
+class colorMenuActionListener implements ActionListener {
+	JPanel _table;
+	public colorMenuActionListener(JPanel aTable)
+	{
+		_table = aTable;
+	}
+	  public void actionPerformed(ActionEvent e) {
+		  Color background = JColorChooser.showDialog(null,
+		            "Choose Color", Color.BLUE);
+		  if(background != null)
+		  {
+			  _table.setBackground(background);
+		  }
+	  }
+	}
+
 class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	private JPanel _table;
 	private Point _lastMousePosition;
+	JPopupMenu menu; 
 	
 	public TableMouseListener(JPanel aPanel)
 	{
 		_table = aPanel;
+		menu = new JPopupMenu("Popup");
+		menu.add(new JMenuItem("Seat New People [TODO]"));
+		menu.add(new JMenuItem("Place Order [TODO]"));
+		JMenuItem colorInfo = new JMenuItem("&Change Color");
+		 colorInfo.addActionListener(new colorMenuActionListener(_table)); 
+		menu.add(colorInfo);
 	}
 	
 	public void mousePressed(java.awt.event.MouseEvent e){
+		if (SwingUtilities.isRightMouseButton(e))
+		{
+			 menu.show(e.getComponent(), e.getX(), e.getY());
+			 return;
+		}
 	    _lastMousePosition=e.getPoint();
 	}
 	
 	public void  mouseDragged(java.awt.event.MouseEvent e){
 	       
+		if (SwingUtilities.isRightMouseButton(e))
+			return;
+		
 	    	   Point currentPoint=e.getPoint();
 	    	   int diffX=currentPoint.x-_lastMousePosition.x;
 	    	   int diffY=currentPoint.y-_lastMousePosition.y;
@@ -74,16 +125,36 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 class Table extends JPanel {
 
 	private int xClick, yClick;
+	private Table _table;
+	public long startTime;
 	private Image img;
+	private JLabel timeLabel;
 		public Table(int x, int y)
 		{
+			_table = this;
 			try{
 			img = ImageIO.read(new File("H:\\baf.jpg"));
 			}catch(Exception e)
-			{
-				
+			{	
 			}
 			
+			timeLabel = new JLabel();
+			this.add(timeLabel);
+			 startTime = System.currentTimeMillis();
+			 
+			 int delay = 1000; //milliseconds
+		      ActionListener taskPerformer = new ActionListener() {
+		          public void actionPerformed(ActionEvent evt) {
+		        	  long millis = System.currentTimeMillis() - startTime;
+		        	    String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+		        	            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+		        	            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+		        	    _table.setToolTipText(hms);
+		        	    timeLabel.setText(hms);
+		          }
+		      };
+		      new javax.swing.Timer(delay, taskPerformer).start();
+		      
 			this.setBounds(x,y,100,100);
 			this.setBackground(Color.CYAN);
 			TableMouseListener ml=new TableMouseListener(this);
@@ -98,6 +169,43 @@ class Table extends JPanel {
 		}
 }
 
+class sqMenuActionListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+	    System.out.println("Selected: " + e.getActionCommand());
+		Test.frame.getContentPane().add(new Table(400, 400));
+		Test.frame.repaint();
+	  }
+	}
+
+class PopupTriggerListener extends MouseAdapter {
+	JPopupMenu menu = new JPopupMenu("Popup"); 
+	 public PopupTriggerListener()
+	 {
+		 
+		 JMenuItem sqMenuItem = new JMenuItem("New Square Table");
+		 JMenuItem cirMenuItem = new JMenuItem("New Circle Table");
+		   sqMenuItem.addActionListener(new sqMenuActionListener()); 
+		 menu.add(sqMenuItem);
+		 menu.add(cirMenuItem);
+		
+	 }
+	
+	
+    public void mousePressed(MouseEvent ev) {
+      if (ev.isPopupTrigger()) {
+       menu.show(ev.getComponent(), ev.getX(), ev.getY());
+      }
+    }
+
+    public void mouseReleased(MouseEvent ev) {
+      if (ev.isPopupTrigger()) {
+       menu.show(ev.getComponent(), ev.getX(), ev.getY());
+      }
+    }
+
+    public void mouseClicked(MouseEvent ev) {
+    }
+  }
 
 
 
