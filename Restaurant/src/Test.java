@@ -88,7 +88,7 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	private JPanel _table;
 	private Point _lastMousePosition;
 	JPopupMenu menu; 
-	
+	boolean resizing = false;
 	public TableMouseListener(JPanel aPanel)
 	{
 		_table = aPanel;
@@ -99,6 +99,29 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		 colorInfo.addActionListener(new colorMenuActionListener(_table)); 
 		menu.add(colorInfo);
 	}
+	public void mouseMoved(MouseEvent e) {
+		//System.out.println("move");
+	      Point curr = e.getPoint();
+	      if((_table.getWidth() - curr.x) < 8)
+	      {
+	    	  Cursor normalCursor = new Cursor(Cursor.E_RESIZE_CURSOR);
+	    	  Test.frame.setCursor(normalCursor);
+	      }else if(curr.x < 8) {
+	    	  Cursor normalCursor = new Cursor(Cursor.W_RESIZE_CURSOR);
+	    	  Test.frame.setCursor(normalCursor);
+	      }else if(curr.y < 8)
+	      {
+	    	  Cursor normalCursor = new Cursor(Cursor.N_RESIZE_CURSOR);
+	    	  Test.frame.setCursor(normalCursor);
+	      }else if(_table.getHeight() - curr.y < 8)
+	      {
+	    	  Cursor normalCursor = new Cursor(Cursor.S_RESIZE_CURSOR);
+	    	  Test.frame.setCursor(normalCursor);
+	      }else{
+	    	  Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+	    	  Test.frame.setCursor(normalCursor);
+	      }
+	    }
 	
 	public void mousePressed(java.awt.event.MouseEvent e){
 		if (SwingUtilities.isRightMouseButton(e))
@@ -108,7 +131,44 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		}
 	    _lastMousePosition=e.getPoint();
 	}
-	
+	public void  mouseExited(java.awt.event.MouseEvent e){
+		if(!resizing)
+		{
+	 	 Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+		  Test.frame.setCursor(normalCursor);
+		  
+		}
+	}
+	public void  mouseReleased(java.awt.event.MouseEvent e){
+		Point currentPoint=e.getPoint();
+ 	   int diffX=currentPoint.x-_lastMousePosition.x;
+ 	   int diffY=currentPoint.y-_lastMousePosition.y;
+ 	  if(Test.frame.getCursorType() == Cursor.W_RESIZE_CURSOR)
+ 	  {
+ 		 _table.setSize(_table.getWidth() - diffX, _table.getHeight());
+ 		_table.setLocation(_table.getX() + diffX, _table.getY());
+ 	  }
+ 	  
+ 	 if(Test.frame.getCursorType() == Cursor.E_RESIZE_CURSOR)
+	  {
+		 _table.setSize(_table.getWidth() + diffX, _table.getHeight());
+		_table.setLocation(_table.getX(), _table.getY());
+	  }
+
+ 	if(Test.frame.getCursorType() == Cursor.S_RESIZE_CURSOR)
+	  {
+		 _table.setSize(_table.getWidth(), _table.getHeight() + diffY);
+	  }
+ 	
+ 	if(Test.frame.getCursorType() == Cursor.N_RESIZE_CURSOR)
+	  {
+		 _table.setSize(_table.getWidth(), _table.getHeight() - diffY);
+		 _table.setLocation(_table.getX(), _table.getY() + diffY);
+	  }
+ 	  _table.repaint();
+ 	 Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+	  Test.frame.setCursor(normalCursor);
+	}
 	public void  mouseDragged(java.awt.event.MouseEvent e){
 	       
 		if (SwingUtilities.isRightMouseButton(e))
@@ -117,10 +177,17 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	    	   Point currentPoint=e.getPoint();
 	    	   int diffX=currentPoint.x-_lastMousePosition.x;
 	    	   int diffY=currentPoint.y-_lastMousePosition.y;
-	           _table.setLocation(_table.getX()+diffX,_table.getY()+diffY);
-	           _table.repaint();
-	           }
+	    	   
+	    	   
+	    	   if(Test.frame.getCursorType() == Cursor.DEFAULT_CURSOR)
+	    	   {
+	    		  // System.out.println(Test.frame.getCursor());
+	    		  resizing = false;
+	    		   _table.setLocation(_table.getX()+diffX,_table.getY()+diffY);
+	    		   _table.repaint();
+	           }else{ resizing = true;}
 	}
+}
 
 class Table extends JPanel {
 
