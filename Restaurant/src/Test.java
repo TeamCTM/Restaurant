@@ -3,6 +3,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
@@ -14,8 +15,10 @@ import javax.swing.*;
 public class Test {
 	static JFrame frame;
 	public static void main(String[] args) {
+		
 		 frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
       
 
        // frame.pack();
@@ -23,6 +26,15 @@ public class Test {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(null);
         frame.setVisible(true);
+        frame.setTitle("Restaurant Manager Genie");
+        JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
+       
+        
+
+    
+    
+        
+        
         
         /*
         String input = "";
@@ -35,28 +47,30 @@ public class Test {
         int number = Integer.parseInt(input);
         */
         
-        JPanel mainp = new JPanel();
-        mainp.setBounds(50,50,100,100);
-        mainp.setBackground(Color.CYAN);
+       // JPanel mainp = new JPanel();
+        //mainp.setBounds(50,50,100,100);
+        //mainp.setBackground(Color.CYAN);
       
-        JPanel maind = new JPanel();
-        maind.setBounds(200,50,100,100);
-        maind.setBackground(Color.CYAN);
+     //   JPanel maind = new JPanel();
+       // maind.setBounds(200,50,100,100);
+        //maind.setBackground(Color.CYAN);
         
+        
+ 
+     
        // frame.getContentPane().add(mainp);
        // frame.getContentPane().add(new Table(10,10));
        // frame.getContentPane().add(new Table(10,200));
        // frame.getContentPane().add(new Table(10,200));
-        
-
-        frame.addMouseListener(new PopupTriggerListener());
+    	
+    	
+         frame.addMouseListener(new PopupTriggerListener());
         
         //frame.getContentPane().add(jScrollPane);
         frame.repaint();
         
 	}
 }
-
 class SayHello extends TimerTask {
 	private Table _panel;
 	public SayHello(JPanel aPanel)
@@ -76,7 +90,7 @@ class colorMenuActionListener implements ActionListener {
 	}
 	  public void actionPerformed(ActionEvent e) {
 		  Color background = JColorChooser.showDialog(null,
-		            "Choose Color", Color.BLUE);
+		            "Choose Color", Color.RED);
 		  if(background != null)
 		  {
 			  _table.setBackground(background);
@@ -200,7 +214,7 @@ class Table extends JPanel {
 		{
 			_table = this;
 			try{
-			img = ImageIO.read(new File("H:\\baf.jpg"));
+			img = ImageIO.read(new File("wood"));
 			}catch(Exception e)
 			{	
 			}
@@ -223,7 +237,8 @@ class Table extends JPanel {
 		      new javax.swing.Timer(delay, taskPerformer).start();
 		      
 			this.setBounds(x,y,100,100);
-			this.setBackground(Color.CYAN);
+			this.setBackground(Color.PINK);
+			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
 			TableMouseListener ml=new TableMouseListener(this);
 			  this.addMouseListener(ml);
 			  this.addMouseMotionListener(ml);
@@ -235,8 +250,63 @@ class Table extends JPanel {
 		        g.drawImage(img, 0, 0, null);
 		}
 }
+class CircleTable extends JPanel {
 
+	private int xClick, yClick;
+	private CircleTable _cirtable;
+	public long startTime;
+	private Image img;
+	private JLabel timeLabel;
+		public CircleTable(int x, int y)
+		{
+			_cirtable = this;
+			try{
+			img = ImageIO.read(new File("wood"));
+			}catch(Exception e)
+			{	
+			}
+			
+			timeLabel = new JLabel();
+			this.add(timeLabel);
+			 startTime = System.currentTimeMillis();
+			 
+			 int delay = 1000; //milliseconds
+		      ActionListener taskPerformer = new ActionListener() {
+		          public void actionPerformed(ActionEvent evt) {
+		        	  long millis = System.currentTimeMillis() - startTime;
+		        	    String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+		        	            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+		        	            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+		        	    _cirtable.setToolTipText(hms);
+		        	    timeLabel.setText(hms);
+		          }
+		      };
+		      new javax.swing.Timer(delay, taskPerformer).start();
+		      
+			this.setBounds(x,y,100,100);
+			this.setBackground(Color.PINK);
+			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
+			TableMouseListener ml=new TableMouseListener(this);
+			  this.addMouseListener(ml);
+			  this.addMouseMotionListener(ml);
+		}
+		
+		@Override
+		  protected void paintComponent(Graphics g) {
+		    super.paintComponent(g);
+		        g.drawImage(img, 0, 0, null);
+		}
+}
 class sqMenuActionListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+	    System.out.println("Selected: " + e.getActionCommand());
+		Test.frame.getContentPane().add(new Table(400, 400));
+		Test.frame.repaint();
+	  }
+	}
+
+
+class cirMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
 	    System.out.println("Selected: " + e.getActionCommand());
 		Test.frame.getContentPane().add(new Table(400, 400));
@@ -252,6 +322,7 @@ class PopupTriggerListener extends MouseAdapter {
 		 JMenuItem sqMenuItem = new JMenuItem("New Square Table");
 		 JMenuItem cirMenuItem = new JMenuItem("New Circle Table");
 		   sqMenuItem.addActionListener(new sqMenuActionListener()); 
+		   cirMenuItem.addActionListener(new cirMenuActionListener());
 		 menu.add(sqMenuItem);
 		 menu.add(cirMenuItem);
 		
@@ -272,25 +343,7 @@ class PopupTriggerListener extends MouseAdapter {
 
     public void mouseClicked(MouseEvent ev) {
     }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 /*
 class Table extends JComponent
