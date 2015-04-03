@@ -27,8 +27,9 @@ public class Test {
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Restaurant Manager Genie");
-        JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
+        JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started. This is Shwetha.");
        
+        //where I
         
 
     
