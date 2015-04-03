@@ -284,7 +284,7 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		@Override
 		  protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
-		        g.drawImage(img, 0, 0, null);
+		        g.drawImage(img, 0, 0,this.getWidth(), this.getHeight(), null);
 		}
 }
 class CircleTable extends JPanel {
@@ -331,7 +331,7 @@ class CircleTable extends JPanel {
 		@Override
 		  protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
-		        g.drawImage(img, 0, 0, null);
+		        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), null);
 		}
 }
 class sqMenuActionListener implements ActionListener {
