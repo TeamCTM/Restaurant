@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 //Madhu: We should rename this 'table' and 'tableTest' 
 
@@ -81,6 +82,31 @@ class SayHello extends TimerTask {
        System.out.println("Hello World!"); 
     }
  }
+class textureMenuActionListener implements ActionListener {
+	Table _table;
+	public textureMenuActionListener(Table aTable)
+	{
+		_table = aTable;
+	}
+	  public void actionPerformed(ActionEvent e) {
+		  JFileChooser chooser = new JFileChooser();
+		  FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		      "JPG & PNG", "jpg", "png");
+		  chooser.setFileFilter(filter);
+		  chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		  int returnVal = chooser.showOpenDialog(null);
+		  if(returnVal == JFileChooser.APPROVE_OPTION) {
+	
+			  try{
+					_table.img = ImageIO.read(chooser.getSelectedFile());
+					_table.repaint();
+					}catch(Exception ex)
+					{	
+					}
+					
+		  }
+	  }
+	}
 
 class colorMenuActionListener implements ActionListener {
 	JPanel _table;
@@ -109,7 +135,10 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		menu = new JPopupMenu("Popup");
 		menu.add(new JMenuItem("Seat New People [TODO]"));
 		menu.add(new JMenuItem("Place Order [TODO]"));
-		JMenuItem colorInfo = new JMenuItem("&Change Color");
+		JMenuItem textureInfo = new JMenuItem("Change Texture");
+		textureInfo.addActionListener(new textureMenuActionListener((Table)_table)); 
+		menu.add(textureInfo);
+		JMenuItem colorInfo = new JMenuItem("Change Color");
 		 colorInfo.addActionListener(new colorMenuActionListener(_table)); 
 		menu.add(colorInfo);
 	}
@@ -155,6 +184,8 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	}
 	public void  mouseReleased(java.awt.event.MouseEvent e){
 		Point currentPoint=e.getPoint();
+		if(_lastMousePosition == null)
+			return;
  	   int diffX=currentPoint.x-_lastMousePosition.x;
  	   int diffY=currentPoint.y-_lastMousePosition.y;
  	  if(Test.frame.getCursorType() == Cursor.W_RESIZE_CURSOR)
@@ -203,18 +234,19 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	}
 }
 
-class Table extends JPanel {
+ class Table extends JPanel {
 
 	private int xClick, yClick;
 	private Table _table;
 	public long startTime;
-	private Image img;
+	public Image img;
 	private JLabel timeLabel;
+
 		public Table(int x, int y)
 		{
 			_table = this;
 			try{
-			img = ImageIO.read(new File("wood"));
+			//img = ImageIO.read(new File("wood"));
 			}catch(Exception e)
 			{	
 			}
@@ -244,6 +276,11 @@ class Table extends JPanel {
 			  this.addMouseMotionListener(ml);
 		}
 		
+		public void setTextureImg(Image aimg)
+		{
+			img = aimg;
+		}
+		
 		@Override
 		  protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
@@ -261,7 +298,7 @@ class CircleTable extends JPanel {
 		{
 			_cirtable = this;
 			try{
-			img = ImageIO.read(new File("wood"));
+			//img = ImageIO.read(new File("wood"));
 			}catch(Exception e)
 			{	
 			}
