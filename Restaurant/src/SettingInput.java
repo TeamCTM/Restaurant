@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
-
+//Madhu
 class SettingInput {
 
     public static JComponent getTwoColumnLayout(
