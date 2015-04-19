@@ -17,11 +17,8 @@ public class Test {
 	static JFrame frame;
 	public static void main(String[] args) {
 		
-		 frame = new JFrame("Resturant Management v1.0");
+		frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-      
-
        // frame.pack();
         frame.getContentPane().setBackground(new Color(200,100,30));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -30,13 +27,6 @@ public class Test {
         frame.setTitle("Restaurant Manager Genie");
         JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
        
-        
-
-    
-    
-        
-        
-        
         /*
         String input = "";
         String rex = "^[1-9]\\d*$";
@@ -55,9 +45,6 @@ public class Test {
      //   JPanel maind = new JPanel();
        // maind.setBounds(200,50,100,100);
         //maind.setBackground(Color.CYAN);
-        
-        
- 
      
        // frame.getContentPane().add(mainp);
        // frame.getContentPane().add(new Table(10,10));
@@ -66,9 +53,8 @@ public class Test {
     	
     	
          frame.addMouseListener(new PopupTriggerListener());
-        
         //frame.getContentPane().add(jScrollPane);
-        frame.repaint();
+         frame.repaint();
         
 	}
 }
@@ -102,8 +88,7 @@ class textureMenuActionListener implements ActionListener {
 					_table.repaint();
 					}catch(Exception ex)
 					{	
-					}
-					
+					}		
 		  }
 	  }
 	}
