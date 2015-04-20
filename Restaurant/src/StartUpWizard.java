@@ -1,12 +1,14 @@
 
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class StartUpWizard {
 	public static void main(String[] args){
 		String first_name;
 		first_name=JOptionPane.showInputDialog("First Name");
-			
+		
+	
 		String restaurant_name;
 		restaurant_name=JOptionPane.showInputDialog("Restaurant Name");
 			

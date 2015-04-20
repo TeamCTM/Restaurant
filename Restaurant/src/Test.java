@@ -27,6 +27,29 @@ public class Test {
         frame.setTitle("Restaurant Manager Genie");
         JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
        
+    	String first_name;
+		first_name=JOptionPane.showInputDialog("First Name");
+		
+		String restaurant_name;
+		restaurant_name=JOptionPane.showInputDialog("Restaurant Name");
+			
+		String sentence1;
+		sentence1="Hello, "+first_name+". Welcome to Restaurant Genie! "
+		+ "I look forward to helping you make "+restaurant_name+" a "
+		+ "successful business!";
+		
+		String sentence2;
+		sentence2=first_name+", you will need to set up your virtual restaurant!";
+		
+		JOptionPane.showMessageDialog(null, sentence1);
+		JOptionPane.showMessageDialog(null, sentence2);
+		//System.exit(0);
+        
+		
+        
+		
+        
+        
         /*
         String input = "";
         String rex = "^[1-9]\\d*$";
