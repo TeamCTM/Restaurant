@@ -11,9 +11,17 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 //Madhu: We should rename this 'table' and 'tableTest' 
 
-public class Test {
+public class Main {
 	static JFrame frame;
 	public static void main(String[] args) {
 		
@@ -21,6 +29,19 @@ public class Test {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // frame.pack();
         frame.getContentPane().setBackground(new Color(200,100,30));
+        
+        try {
+    		frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("darkwood.jpg")))));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	frame.pack();
+    	frame.setVisible(true);
+        
+        
+        
+        
+        
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -156,21 +177,21 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	      if((_table.getWidth() - curr.x) < 8)
 	      {
 	    	  Cursor normalCursor = new Cursor(Cursor.E_RESIZE_CURSOR);
-	    	  Test.frame.setCursor(normalCursor);
+	    	  Main.frame.setCursor(normalCursor);
 	      }else if(curr.x < 8) {
 	    	  Cursor normalCursor = new Cursor(Cursor.W_RESIZE_CURSOR);
-	    	  Test.frame.setCursor(normalCursor);
+	    	  Main.frame.setCursor(normalCursor);
 	      }else if(curr.y < 8)
 	      {
 	    	  Cursor normalCursor = new Cursor(Cursor.N_RESIZE_CURSOR);
-	    	  Test.frame.setCursor(normalCursor);
+	    	  Main.frame.setCursor(normalCursor);
 	      }else if(_table.getHeight() - curr.y < 8)
 	      {
 	    	  Cursor normalCursor = new Cursor(Cursor.S_RESIZE_CURSOR);
-	    	  Test.frame.setCursor(normalCursor);
+	    	  Main.frame.setCursor(normalCursor);
 	      }else{
 	    	  Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-	    	  Test.frame.setCursor(normalCursor);
+	    	  Main.frame.setCursor(normalCursor);
 	      }
 	    }
 	
@@ -186,7 +207,7 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		if(!resizing)
 		{
 	 	 Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-		  Test.frame.setCursor(normalCursor);
+		  Main.frame.setCursor(normalCursor);
 		  
 		}
 	}
@@ -196,31 +217,31 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 			return;
  	   int diffX=currentPoint.x-_lastMousePosition.x;
  	   int diffY=currentPoint.y-_lastMousePosition.y;
- 	  if(Test.frame.getCursorType() == Cursor.W_RESIZE_CURSOR)
+ 	  if(Main.frame.getCursorType() == Cursor.W_RESIZE_CURSOR)
  	  {
  		 _table.setSize(_table.getWidth() - diffX, _table.getHeight());
  		_table.setLocation(_table.getX() + diffX, _table.getY());
  	  }
  	  
- 	 if(Test.frame.getCursorType() == Cursor.E_RESIZE_CURSOR)
+ 	 if(Main.frame.getCursorType() == Cursor.E_RESIZE_CURSOR)
 	  {
 		 _table.setSize(_table.getWidth() + diffX, _table.getHeight());
 		_table.setLocation(_table.getX(), _table.getY());
 	  }
 
- 	if(Test.frame.getCursorType() == Cursor.S_RESIZE_CURSOR)
+ 	if(Main.frame.getCursorType() == Cursor.S_RESIZE_CURSOR)
 	  {
 		 _table.setSize(_table.getWidth(), _table.getHeight() + diffY);
 	  }
  	
- 	if(Test.frame.getCursorType() == Cursor.N_RESIZE_CURSOR)
+ 	if(Main.frame.getCursorType() == Cursor.N_RESIZE_CURSOR)
 	  {
 		 _table.setSize(_table.getWidth(), _table.getHeight() - diffY);
 		 _table.setLocation(_table.getX(), _table.getY() + diffY);
 	  }
  	  _table.repaint();
  	 Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-	  Test.frame.setCursor(normalCursor);
+	  Main.frame.setCursor(normalCursor);
 	}
 	public void  mouseDragged(java.awt.event.MouseEvent e){
 	       
@@ -232,7 +253,7 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	    	   int diffY=currentPoint.y-_lastMousePosition.y;
 	    	   
 	    	   
-	    	   if(Test.frame.getCursorType() == Cursor.DEFAULT_CURSOR)
+	    	   if(Main.frame.getCursorType() == Cursor.DEFAULT_CURSOR)
 	    	   {
 	    		  // System.out.println(Test.frame.getCursor());
 	    		  resizing = false;
@@ -254,7 +275,7 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		{
 			_table = this;
 			try{
-			//img = ImageIO.read(new File("wood"));
+			img = ImageIO.read(new File("wood"));
 			}catch(Exception e)
 			{	
 			}
@@ -345,8 +366,8 @@ class CircleTable extends JPanel {
 class sqMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
 	    System.out.println("Selected: " + e.getActionCommand());
-		Test.frame.getContentPane().add(new Table(400, 400));
-		Test.frame.repaint();
+		Main.frame.getContentPane().add(new Table(400, 400));
+		Main.frame.repaint();
 	  }
 	}
 
@@ -354,8 +375,8 @@ class sqMenuActionListener implements ActionListener {
 class cirMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
 	    System.out.println("Selected: " + e.getActionCommand());
-		Test.frame.getContentPane().add(new Table(400, 400));
-		Test.frame.repaint();
+		Main.frame.getContentPane().add(new Table(400, 400));
+		Main.frame.repaint();
 	  }
 	}
 
