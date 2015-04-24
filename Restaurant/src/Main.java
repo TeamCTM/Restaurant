@@ -41,6 +41,14 @@ public class Main {
     	}
     	frame.pack();
     	frame.setVisible(true);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
         
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.getContentPane().setLayout(null);
@@ -384,7 +392,7 @@ class PropMenu extends JPanel {
 		   
 			this.setBounds(x,y,100,100);
 			this.setBackground(Color.PINK);
-			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
+			img = Toolkit.getDefaultToolkit().createImage("wood_1.jpeg");
 			TableMouseListener ml=new TableMouseListener(this);
 			  this.addMouseListener(ml);
 			  this.addMouseMotionListener(ml);
