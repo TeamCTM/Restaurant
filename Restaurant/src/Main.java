@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 
 
@@ -30,8 +32,7 @@ public class Main {
 		
 		frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.pack();
-        //frame.getContentPane().setLocation(0,100);
+        
         frame.getContentPane().setBackground(new Color(200,100,30));
 
         try {
@@ -42,20 +43,13 @@ public class Main {
     	frame.pack();
     	frame.setVisible(true);
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-        
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.getContentPane().setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Restaurant Manager Genie");
-        JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
+       // JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
        
+        /*
     	String first_name;
 		first_name=JOptionPane.showInputDialog("First Name");
 		
@@ -73,11 +67,7 @@ public class Main {
 		JOptionPane.showMessageDialog(null, sentence1);
 		JOptionPane.showMessageDialog(null, sentence2);
 		//System.exit(0);
-        
-		
-        
-		
-        
+        */
         
         /*
         String input = "";
@@ -89,20 +79,6 @@ public class Main {
         
         int number = Integer.parseInt(input);
         */
-        
-       // JPanel mainp = new JPanel();
-        //mainp.setBounds(50,50,100,100);
-        //mainp.setBackground(Color.CYAN);
-      
-     //   JPanel maind = new JPanel();
-       // maind.setBounds(200,50,100,100);
-        //maind.setBackground(Color.CYAN);
-     
-       // frame.getContentPane().add(mainp);
-       // frame.getContentPane().add(new Table(10,10));
-       // frame.getContentPane().add(new Table(10,200));
-       // frame.getContentPane().add(new Table(10,200));
-    	
     	
          frame.addMouseListener(new PopupTriggerListener());
         //frame.getContentPane().add(jScrollPane);
@@ -162,11 +138,11 @@ class colorMenuActionListener implements ActionListener {
 	}
 
 class TableMouseListener extends javax.swing.event.MouseInputAdapter{
-	private JPanel _table;
+	private Table _table;
 	private Point _lastMousePosition;
 	JPopupMenu menu; 
 	boolean resizing = false;
-	public TableMouseListener(JPanel aPanel)
+	public TableMouseListener(Table aPanel)
 	{
 		_table = aPanel;
 		menu = new JPopupMenu("Popup");
@@ -259,18 +235,6 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	        if (e.getClickCount()  == 2)
 	        {
 	      //  _table.setBackground(new Color(0,0,0,200));
-	        	/*
-	            BufferedImage bufImg = new BufferedImage(Main.frame.getContentPane().getSize().width, Main.frame.getContentPane().getSize().height,BufferedImage.TYPE_INT_RGB);  
-	            Main.frame.paint(bufImg.createGraphics());  
-	            
-	           // BufferedImage dest = bufImg.getSubimage(0, tableY, Main.frame.getSize().width, 50);
-	            File imageFile = new File("test.jpg");  
-	         try{  
-	             imageFile.createNewFile();  
-	             ImageIO.write(bufImg, "jpeg", imageFile);  
-	         }catch(Exception ex){  
-	         }  
-	         */
 	         
 	        PropMenu propertiesMenu = new PropMenu(0, 0);
 	        propertiesMenu.setSize(500, 500);
@@ -298,13 +262,9 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	        	panel.setOpaque(false); 
 	           Main.frame.setGlassPane(panel);
 	        	panel.setVisible(true);
-	        	JDialog pop = new JDialog(Main.frame, "CHEAAAA", Dialog.ModalityType.DOCUMENT_MODAL);
-	        	//pop.setLocationRelativeTo(Main.frame.getContentPane());
-	        	pop.setBounds(0,_table.getY() + 50 + _table.getHeight(),Main.frame.getWidth(),175);
-
-	        	pop.setUndecorated(true);
-	        	pop.setVisible(true);
-	        	//Main.frame.repaint();
+	        	
+	        	_table.showProperties();
+	            
 	        }
 	 }
 	 
@@ -354,61 +314,10 @@ class PropMenu extends JPanel {
 		}
 }
 
- class Table extends JPanel {
+ 
 
-	private int xClick, yClick;
-	private Table _table;
-	public long startTime;
-	public Image img;
-	private JLabel timeLabel;
 
-		public Table(int x, int y)
-		{
-			_table = this;
-			try{
-			img = ImageIO.read(new File("wood"));
-			}catch(Exception e)
-			{	
-			}
-			
-			//this.setLayout(null);
-			timeLabel = new JLabel();
-			this.add(timeLabel);
-			 startTime = System.currentTimeMillis();
-			 
-			 int delay = 1000; //milliseconds
-		      ActionListener taskPerformer = new ActionListener() {
-		          public void actionPerformed(ActionEvent evt) {
-		        	//  timeLabel.setVisible(false);
-		        	  long millis = System.currentTimeMillis() - startTime;
-		        	    String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-		        	            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-		        	            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-		        	    if(!Main.properties)
-		        	    	timeLabel.setText(hms);
-		          }
-		      };
-		      new javax.swing.Timer(delay, taskPerformer).start();
-		   
-			this.setBounds(x,y,100,100);
-			this.setBackground(Color.PINK);
-			img = Toolkit.getDefaultToolkit().createImage("wood_1.jpeg");
-			TableMouseListener ml=new TableMouseListener(this);
-			  this.addMouseListener(ml);
-			  this.addMouseMotionListener(ml);
-		}
-		
-		public void setTextureImg(Image aimg)
-		{
-			img = aimg;
-		}
-		
-		@Override
-		  protected void paintComponent(Graphics g) {
-		    super.paintComponent(g);
-		        g.drawImage(img, 0, 0,this.getWidth(), this.getHeight(), null);
-		}
-}
+
 class CircleTable extends JPanel {
 
 	private int xClick, yClick;
@@ -445,9 +354,9 @@ class CircleTable extends JPanel {
 			this.setBounds(x,y,100,100);
 			this.setBackground(Color.PINK);
 			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
-			TableMouseListener ml=new TableMouseListener(this);
-			  this.addMouseListener(ml);
-			  this.addMouseMotionListener(ml);
+			//TableMouseListener ml=new TableMouseListener();
+			//  this.addMouseListener(ml);
+			//  this.addMouseMotionListener(ml);
 		}
 		
 		@Override
@@ -458,8 +367,8 @@ class CircleTable extends JPanel {
 }
 class sqMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
-	   // System.out.println("Selected: " + e.getActionCommand());
-		Main.frame.getContentPane().add(new Table(400, 400));
+	   Table newTable = new Table(400,400);
+		Main.frame.getContentPane().add(newTable);
 		Main.frame.repaint();
 	  }
 	}
@@ -467,8 +376,6 @@ class sqMenuActionListener implements ActionListener {
 
 class cirMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
-	    //System.out.println("Selected: " + e.getActionCommand());
-		  
 		Main.frame.getContentPane().add(new Table(400, 400));
 		Main.frame.repaint();
 	  }
