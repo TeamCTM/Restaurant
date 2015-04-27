@@ -10,15 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -47,18 +44,31 @@ public class Main {
         frame.setVisible(true);
         frame.setTitle("Restaurant Manager Genie");
         
-        JPanel myPanel = new JPanel();
-       myPanel.setBackground(Color.YELLOW);
-       myPanel.setSize(250, 40);
-       myPanel.setLocation(900, 20);
+       
+        
+        //Madhu: This section of code adds a Real Time JLabel to the JFrame
+        final JPanel realTimePanel = new JPanel();
+        realTimePanel.setBackground(Color.YELLOW);
+        realTimePanel.setSize(250, 40);
+        realTimePanel.setLocation(900, 20);
         JLabel dateTime = new JLabel();
         dateTime.setText(JFrameDate.timeNow());
-    
-        myPanel.add(dateTime);
-    
-       frame.add(myPanel, BorderLayout.CENTER);
+        realTimePanel.add(dateTime);
+       frame.add(realTimePanel, BorderLayout.CENTER);
        frame.setVisible(true);
        frame.repaint();
+       
+       JButton closeButton= new JButton("HIDE");
+       realTimePanel.add(closeButton, BorderLayout.SOUTH);
+       closeButton.addActionListener(new ActionListener(){
+       
+       	public void actionPerformed(ActionEvent e){
+       	realTimePanel.setVisible(false);
+
+       	}
+       });
+    
+       frame.setVisible(true);
        
         
        
@@ -254,7 +264,10 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	        {
 	      //  _table.setBackground(new Color(0,0,0,200));
 	         
-	        PropMenu propertiesMenu = new PropMenu(0, 0);
+	        	
+	        	
+	        	
+PropMenu propertiesMenu = new PropMenu(0, 0);
 	        propertiesMenu.setSize(500, 500);
 	        propertiesMenu.setVisible(true);
 	        	//Main.frame.getGlassPane().setVisible(true);
@@ -262,10 +275,11 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	        	//Main.frame.getContentPane()
 	        	JPanel blur = new JPanel();
 	        	blur.setBounds(0,0,Main.frame.getWidth(), Main.frame.getHeight());
-	        	blur.setBackground(new Color(0,0,0,200));
+	        	blur.setBackground(new Color(0,0,0,100));
 	        	
-	        	JPanel panel = new JPanel()
+JPanel panel = new JPanel()
 	        	{
+	
 	        	   public void paintComponent(Graphics g)
 	        	   {
 	        	      //Set the color to with red with a 50% alpha
@@ -273,6 +287,8 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	        	 
 	        	      //Fill a rectangle with the 50% red color
 	        	      g.fillRect(0, 0, this.getWidth(), this.getHeight());
+	        	      
+	        	      
 	        	   }
 	        	};
 	        	
@@ -318,6 +334,8 @@ class PropMenu extends JPanel {
 		
 			this.setBounds(x,y,Main.frame.getWidth(),300);
 			this.setBackground(Color.GRAY);
+			
+		
 		}
 		
 		public void setTextureImg(Image aimg)
@@ -329,6 +347,11 @@ class PropMenu extends JPanel {
 		  protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
 		        g.drawImage(img, 0, 0,this.getWidth(), this.getHeight(), null);
+		        
+		        
+		       
+		         
+		        
 		}
 }
 
@@ -370,7 +393,7 @@ class CircleTable extends JPanel {
 		      new javax.swing.Timer(delay, taskPerformer).start();
 		      
 			this.setBounds(x,y,100,100);
-			this.setBackground(Color.PINK);
+			this.setBackground(Color.YELLOW);
 			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
 			//TableMouseListener ml=new TableMouseListener();
 			//  this.addMouseListener(ml);

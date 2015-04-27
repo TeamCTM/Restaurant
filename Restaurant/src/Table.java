@@ -1,5 +1,7 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -23,7 +25,7 @@ public class Table extends JPanel {
 	private Table _table;
 	public long startTime;
 	public Image img;
-    public JLabel timeLabel, propertiesTimeLabel, currentTimeLabel;
+    public JLabel timeLabel, propertiesTimeLabel, currentTimeLabel,customerLabel;
     public String _currentTime;
     
 		public Table(int x, int y)
@@ -35,30 +37,31 @@ public class Table extends JPanel {
 			timeLabel = new JLabel();
         	propertiesTimeLabel = new JLabel("Current Sitting Time: " + _table.getTableTime(), SwingConstants.RIGHT);
             propertiesTimeLabel.setVerticalAlignment(SwingConstants.TOP);
-            
             currentTimeLabel = new JLabel("", SwingConstants.RIGHT);
             //currentTimeLabel.setVerticalAlignment(SwingConstants.CENTER);
-            
-			this.add(timeLabel);
+			 this.add(timeLabel);
 			 startTime = System.currentTimeMillis();
-			 
-			 int delay = 1000; //milliseconds
+			  int delay = 1000; //milliseconds
 		      ActionListener taskPerformer = new ActionListener() {
-		          public void actionPerformed(ActionEvent evt) {
-		        	//  timeLabel.setVisible(false);
-		        	  long millis = System.currentTimeMillis() - startTime;
-		        	    String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-		        	            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-		        	            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-		        	    	timeLabel.setText(hms);
-		        	    	propertiesTimeLabel.setText("Current Sitting Time: " +  hms);
-		        	    	_currentTime = hms;
+		      public void actionPerformed(ActionEvent evt) {
+		      //  timeLabel.setVisible(false);
+		      long millis = System.currentTimeMillis() - startTime;
+		      String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+		      TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+		      TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+		      timeLabel.setText(hms);
+		      propertiesTimeLabel.setText("Current Sitting Time: " +  hms);
+		      _currentTime = hms;
 		        	    	
-		        	    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		        	    	Date date = new Date();
-		        	    	//currentTimeLabel.setText(dateFormat.format(date));
-		        	    	
-		          }
+		      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		      Date date = new Date();
+		      
+		      //currentTimeLabel.setText(dateFormat.format(date));
+		 
+		      }
+
+		
+		          
 		      };
 		      new javax.swing.Timer(delay, taskPerformer).start();
 		   
