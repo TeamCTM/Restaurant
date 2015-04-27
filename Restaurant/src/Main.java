@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.*;
@@ -12,9 +15,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-
-
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class Main {
 		frame = new JFrame("Resturant Management v1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        frame.getContentPane().setBackground(new Color(200,100,30));
+        frame.getContentPane().setBackground(new Color(100,100,30));
 
         try {
     		frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("darkwood.jpg")))));
@@ -42,11 +42,26 @@ public class Main {
     	}
     	frame.pack();
     	frame.setVisible(true);
-    	
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.getContentPane().setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Restaurant Manager Genie");
+        
+        JPanel myPanel = new JPanel();
+       myPanel.setBackground(Color.YELLOW);
+       myPanel.setSize(250, 40);
+       myPanel.setLocation(900, 20);
+        JLabel dateTime = new JLabel();
+        dateTime.setText(JFrameDate.timeNow());
+    
+        myPanel.add(dateTime);
+    
+       frame.add(myPanel, BorderLayout.CENTER);
+       frame.setVisible(true);
+       frame.repaint();
+       
+        
+       
        // JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
        
         /*
@@ -154,6 +169,9 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 		JMenuItem colorInfo = new JMenuItem("Change Color");
 		 colorInfo.addActionListener(new colorMenuActionListener(_table)); 
 		menu.add(colorInfo);
+		menu.add(new JMenuItem("Change Floor Texture"));
+		
+		
 	}
 	public void mouseMoved(MouseEvent e) {
 		//System.out.println("move");
@@ -382,6 +400,7 @@ class cirMenuActionListener implements ActionListener {
 	}
 
 class PopupTriggerListener extends MouseAdapter {
+	private static final String DATE_FORMAT_NOW = null;
 	JPopupMenu menu = new JPopupMenu("Popup"); 
 	 public PopupTriggerListener()
 	 {
@@ -424,3 +443,6 @@ class Table extends JComponent
 	}
 }
 */
+    
+
+
