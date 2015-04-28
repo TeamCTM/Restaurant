@@ -359,53 +359,7 @@ class PropMenu extends JPanel {
 
 
 
-class CircleTable extends JPanel {
 
-	private int xClick, yClick;
-	private CircleTable _cirtable;
-	public long startTime;
-	private Image img;
-	private JLabel timeLabel;
-		public CircleTable(int x, int y)
-		{
-			_cirtable = this;
-			try{
-			//img = ImageIO.read(new File("wood"));
-			}catch(Exception e)
-			{	
-			}
-			
-			timeLabel = new JLabel();
-			this.add(timeLabel);
-			 startTime = System.currentTimeMillis();
-			 
-			 int delay = 1000; //milliseconds
-		      ActionListener taskPerformer = new ActionListener() {
-		          public void actionPerformed(ActionEvent evt) {
-		        	  long millis = System.currentTimeMillis() - startTime;
-		        	    String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-		        	            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-		        	            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-		        	    _cirtable.setToolTipText(hms);
-		        	    timeLabel.setText(hms);
-		          }
-		      };
-		      new javax.swing.Timer(delay, taskPerformer).start();
-		      
-			this.setBounds(x,y,100,100);
-			this.setBackground(Color.YELLOW);
-			// img = Toolkit.getDefaultToolkit().createImage("wood.png");
-			//TableMouseListener ml=new TableMouseListener();
-			//  this.addMouseListener(ml);
-			//  this.addMouseMotionListener(ml);
-		}
-		
-		@Override
-		  protected void paintComponent(Graphics g) {
-		    super.paintComponent(g);
-		        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), null);
-		}
-}
 class sqMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
 	   Table newTable = new Table(400,400);
@@ -417,7 +371,7 @@ class sqMenuActionListener implements ActionListener {
 
 class cirMenuActionListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e) {
-		Main.frame.getContentPane().add(new Table(400, 400));
+		Main.frame.getContentPane().add(new CircleTable());
 		Main.frame.repaint();
 	  }
 	}
