@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -100,13 +102,12 @@ public class Table extends JPanel {
         	customerLabel.setBounds(0,25,150,25);
         	
         	
-        	SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
+        	SpinnerModel model = new SpinnerNumberModel(0, 0, 30, 1);     
         	final JSpinner spinner = new JSpinner(model);
         	spinner.setEditor(new JSpinner.DefaultEditor(spinner));
         	spinner.setBounds(150,0,100,25);
         	
         	final JComboBox customers = new JComboBox();
-        	//customers.addItem(1);
         	customers.setBounds(150,25,100,25);
         	
         	
@@ -124,7 +125,20 @@ public class Table extends JPanel {
 				}
         	    }; 
             	    
-            	   
+                customers.addItemListener(new ItemListener() {
+
+					public void itemStateChanged(ItemEvent e) {
+						if(customers.getItemCount() == 0)
+						{
+							_customers = 0;
+							seatedLabel.setText("Seated: " + _customers + "/" + _capacity);
+							return;
+						}
+						_customers = (Integer)customers.getSelectedItem();
+						seatedLabel.setText("Seated: " + _customers + "/" + _capacity);
+					}
+                });
+                
         	    spinner.addChangeListener(listener);
         	
         	pop.getContentPane().add(propertiesTimeLabel);
