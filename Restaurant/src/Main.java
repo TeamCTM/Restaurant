@@ -295,6 +295,7 @@ JPanel panel = new JPanel()
 	        	//panel.add(propertiesMenu);
 	        	panel.setOpaque(false); 
 	           Main.frame.setGlassPane(panel);
+	       
 	        	panel.setVisible(true);
 	        	
 	        	_table.showProperties();

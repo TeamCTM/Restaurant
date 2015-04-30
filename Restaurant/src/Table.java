@@ -13,11 +13,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class Table extends JPanel {
 
@@ -25,21 +31,26 @@ public class Table extends JPanel {
 	private Table _table;
 	public long startTime;
 	public Image img;
-    public JLabel timeLabel, propertiesTimeLabel, currentTimeLabel,customerLabel;
+    public JLabel timeLabel, propertiesTimeLabel, currentTimeLabel,capacityLabel, customerLabel, seatedLabel;
     public String _currentTime;
+    public int _capacity, _customers;
     
 		public Table(int x, int y)
 		{
-	
+			_capacity = 0;
+			_customers = 0;
 			_table = this;
 			//img = Toolkit.getDefaultToolkit().createImage("wood_1.jpeg");
 		
 			timeLabel = new JLabel();
+			seatedLabel = new JLabel("Seated: " + _customers + "/" + _capacity);
         	propertiesTimeLabel = new JLabel("Current Sitting Time: " + _table.getTableTime(), SwingConstants.RIGHT);
-            propertiesTimeLabel.setVerticalAlignment(SwingConstants.TOP);
+           // propertiesTimeLabel.setVerticalAlignment(SwingConstants.TOP);
+        	propertiesTimeLabel.setBounds(1000,0,200,20);
             currentTimeLabel = new JLabel("", SwingConstants.RIGHT);
             //currentTimeLabel.setVerticalAlignment(SwingConstants.CENTER);
 			 this.add(timeLabel);
+			 this.add(seatedLabel);
 			 startTime = System.currentTimeMillis();
 			  int delay = 1000; //milliseconds
 		      ActionListener taskPerformer = new ActionListener() {
@@ -79,11 +90,49 @@ public class Table extends JPanel {
 			JDialog pop = new JDialog(Main.frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
         	pop.setBounds(0,_table.getY() + 50 + _table.getHeight(),Main.frame.getWidth(),175);
         	pop.getRootPane().setBorder(new EmptyBorder(10, 10, 10, 10) );
-       
-        
-            pop.getContentPane().add(propertiesTimeLabel);
-           // pop.getContentPane().add(currentTimeLabel);
-            
+        	pop.setLayout(null);
+        	
+        	
+        	capacityLabel = new JLabel("Table Seating Capacity:");
+        	capacityLabel.setBounds(0,0,150,25);
+        	
+        	customerLabel = new JLabel("Number of Customers:");
+        	customerLabel.setBounds(0,25,150,25);
+        	
+        	
+        	SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
+        	final JSpinner spinner = new JSpinner(model);
+        	spinner.setEditor(new JSpinner.DefaultEditor(spinner));
+        	spinner.setBounds(150,0,100,25);
+        	
+        	final JComboBox customers = new JComboBox();
+        	//customers.addItem(1);
+        	customers.setBounds(150,25,100,25);
+        	
+        	
+        	ChangeListener listener = new ChangeListener() {
+
+				public void stateChanged(ChangeEvent e) {
+					_capacity = (Integer) spinner.getValue(); //get new spinner value
+					
+					customers.removeAllItems(); //remove all items from dropdown
+					for(int i = 1; i <= _capacity; i++)
+					{
+						customers.addItem(i); //repopulate the dropdown
+					}
+					seatedLabel.setText("Seated: " + _customers + "/" + _capacity);
+				}
+        	    }; 
+            	    
+            	   
+        	    spinner.addChangeListener(listener);
+        	
+        	pop.getContentPane().add(propertiesTimeLabel);
+        	pop.getContentPane().add(spinner);
+        	pop.getContentPane().add(customerLabel);
+        	pop.getContentPane().add(capacityLabel);
+        	pop.getContentPane().add(customers);
+        	
             pop.setUndecorated(true);
         	pop.setVisible(true);
         	
