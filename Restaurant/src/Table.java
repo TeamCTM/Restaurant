@@ -172,6 +172,7 @@ public class Table extends JPanel {
 		public void setTextureImg(Image aimg)
 		{
 			img = aimg;
+			this.repaint();
 		}
 		
 	    public String getTableTime()

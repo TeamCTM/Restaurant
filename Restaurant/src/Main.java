@@ -188,19 +188,65 @@ class TableMouseListener extends javax.swing.event.MouseInputAdapter{
 	private Point _lastMousePosition;
 	JPopupMenu menu; 
 	boolean resizing = false;
+	  static Icon oneIcon = new ImageIcon("walnut.png");
+	  static Icon twoIcon = new ImageIcon("mahogany.png");
+	  static Icon threeIcon = new ImageIcon("cherry.png");
+	  static Icon fourIcon = new ImageIcon("chestnut.png");
+	  static Icon fiveIcon = new ImageIcon("beech.png");
+	  
 	public TableMouseListener(Table aPanel)
 	{
 		_table = aPanel;
-		menu = new JPopupMenu("Popup");
-		menu.add(new JMenuItem("Seat New People [TODO]"));
-		menu.add(new JMenuItem("Place Order [TODO]"));
-		JMenuItem textureInfo = new JMenuItem("Change Texture");
-		textureInfo.addActionListener(new textureMenuActionListener((Table)_table)); 
+		menu = new JPopupMenu();
+		JMenu textureInfo = new JMenu("Change Texture");
+		
+		//textureInfo.addActionListener(new textureMenuActionListener((Table)_table)); 
+		 JRadioButtonMenuItem walnutOption = new JRadioButtonMenuItem("Walnut",oneIcon,false);
+		 JRadioButtonMenuItem mahoganyOption = new JRadioButtonMenuItem(
+			        "Mahogany", twoIcon, true);
+		 JRadioButtonMenuItem cherryOption = new JRadioButtonMenuItem(
+			        "Cherry", threeIcon);
+		 JRadioButtonMenuItem chesnutOption = new JRadioButtonMenuItem(
+			        "Chestnut", fourIcon, true);
+		 JRadioButtonMenuItem beechOption = new JRadioButtonMenuItem("Beech",fiveIcon,true);
+		 
+		 textureInfo.add(walnutOption);
+		 textureInfo.add(mahoganyOption);
+		 textureInfo.add(cherryOption);
+		 textureInfo.add(chesnutOption);
+		 textureInfo.add(beechOption);
+		 
 		menu.add(textureInfo);
+		
+	    ActionListener listener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				 JRadioButtonMenuItem selected = (JRadioButtonMenuItem)e.getSource();
+			  String path = ((ImageIcon)selected.getIcon()).toString();
+				 File file = new File(path);
+				         try {
+							Image image = ImageIO.read(file);
+							_table.setTextureImg(image);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+			}
+
+	      };
+	      
+
+	      walnutOption.addActionListener(listener);
+	      mahoganyOption.addActionListener(listener);
+	      cherryOption.addActionListener(listener);
+	      chesnutOption.addActionListener(listener);
+	      beechOption.addActionListener(listener);
+		
 		JMenuItem colorInfo = new JMenuItem("Change Color");
 		 colorInfo.addActionListener(new colorMenuActionListener(_table)); 
 		menu.add(colorInfo);
-		menu.add(new JMenuItem("Change Floor Texture"));
+		//menu.add(new JMenuItem("Change Floor Texture"));
 		
 		
 	}
