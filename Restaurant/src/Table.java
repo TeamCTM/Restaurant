@@ -15,6 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -79,7 +80,8 @@ public class Table extends JPanel {
 		      new javax.swing.Timer(delay, taskPerformer).start();
 		   
 			this.setBounds(x,y,100,100);
-			this.setBackground(Color.PINK);
+			Color customColor = new Color(227,212,148);
+			this.setBackground(customColor);
 			
 			TableMouseListener ml=new TableMouseListener(this);
 			  this.addMouseListener(ml);
@@ -89,12 +91,28 @@ public class Table extends JPanel {
 		
 		public void showProperties()
 		{
-			JDialog pop = new JDialog(Main.frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
-        	pop.setBounds(0,_table.getY() + 50 + _table.getHeight(),Main.frame.getWidth(),175);
+			final JDialog pop = new JDialog(Main.frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
+        	pop.setBounds(10,200,Main.frame.getWidth()-10,275);
         	pop.getRootPane().setBorder(new EmptyBorder(10, 10, 10, 10) );
         	pop.setLayout(null);
+        	  Color customColor = new Color(227,212,148);
+          	pop.getContentPane().setBackground( customColor );
+          	
+            pop.getContentPane().add(propertiesTimeLabel);
         	
-        	
+            JButton dashcloseButton= new JButton("Back to Virtual Restaurant");
+            dashcloseButton.setBounds(0,220,200,30);
+            pop.getContentPane().add(dashcloseButton); //adds close button to pop window
+            dashcloseButton.addActionListener(new ActionListener(){
+            
+            	public void actionPerformed(ActionEvent e){
+            		 pop.setVisible(false); //Gets rid of pop window
+            		 Main.frame.getGlassPane().setVisible(false); //Gets rid of dimmed background
+            		 Main.frame.repaint();
+            	}
+            });
+            
+            
         	capacityLabel = new JLabel("Table Seating Capacity:");
         	capacityLabel.setBounds(0,0,150,25);
         	

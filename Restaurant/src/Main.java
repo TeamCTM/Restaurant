@@ -48,7 +48,8 @@ public class Main {
         
         //Madhu: This section of code adds a Real Time JLabel to the JFrame
         final JPanel realTimePanel = new JPanel();
-        realTimePanel.setBackground(Color.YELLOW);
+        Color timeColor = new Color(237,221,152);
+        realTimePanel.setBackground(timeColor);
         realTimePanel.setSize(250, 40);
         realTimePanel.setLocation(900, 20);
         JLabel dateTime = new JLabel();
@@ -74,14 +75,34 @@ public class Main {
        
        // JOptionPane.showMessageDialog(frame, "Welcome to Restaurant Manager Genie! Let's get started.");
        
-        /*
-    	String first_name;
-		first_name=JOptionPane.showInputDialog("First Name");
-		
-		String restaurant_name;
-		restaurant_name=JOptionPane.showInputDialog("Restaurant Name");
-			
-		String sentence1;
+   	String first_name;
+	first_name=JOptionPane.showInputDialog("First Name");
+	
+	//put user name on frame
+	JPanel usernamePanel=new JPanel();
+	usernamePanel.setSize(200,40);
+	 Color customColor = new Color(227,212,148);
+	 usernamePanel.setBackground(customColor);
+	JLabel usernameLabel = new JLabel("User: "+first_name);
+	usernamePanel.add(usernameLabel);
+	usernamePanel.setLocation(500,20);
+	frame.add(usernamePanel,BorderLayout.CENTER);
+	
+	String restaurant_name;
+	restaurant_name=JOptionPane.showInputDialog("Restaurant Name");
+	
+	//put restaurant name on frame
+	JPanel rnamePanel=new JPanel();
+	rnamePanel.setSize(200,40);
+	Color customColor2 = new Color(227,205,107);
+	rnamePanel.setBackground(customColor2);
+	JLabel rnameLabel = new JLabel("Restaurant Name: "+restaurant_name);
+	rnamePanel.add(rnameLabel);
+	rnamePanel.setLocation(700, 20);
+	frame.add(rnamePanel,BorderLayout.CENTER);
+	frame.setVisible(true);
+	frame.repaint();
+		/*String sentence1;
 		sentence1="Hello, "+first_name+". Welcome to Restaurant Genie! "
 		+ "I look forward to helping you make "+restaurant_name+" a "
 		+ "successful business!";
