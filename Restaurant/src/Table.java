@@ -64,18 +64,15 @@ public class Table extends JPanel {
 		      TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
 		      TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 		      timeLabel.setText(hms);
+		     //_table.repaint();
 		      propertiesTimeLabel.setText("Current Sitting Time: " +  hms);
 		      _currentTime = hms;
 		        	    	
 		      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		      Date date = new Date();
-		      
-		      //currentTimeLabel.setText(dateFormat.format(date));
 		 
 		      }
-
-		
-		          
+  
 		      };
 		      new javax.swing.Timer(delay, taskPerformer).start();
 		   
