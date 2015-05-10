@@ -23,7 +23,24 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-//Madhu: We should rename this 'table' and 'tableTest' 
+
+/*
+/////////////
+Version 1.1.0
+May 8, 2015
+/////////////
+Please Read before running this program:
+
+This program was made to assist a restaurant manager in keeping track of his or her 
+customers in a busy setting. Right-click the screen to 
+A.Make a square table
+B.Make a circle table
+C.Change the background
+You can also:
+A.Right-click a table to change it texture. 
+B.Resize square tables by clicking and dragging the edges.
+C.Double-click a table to view the number of guests at each table.
+*/
 
 public class Main {
 	 static JFrame frame;
