@@ -29,6 +29,8 @@ public class Main {
 	 static JFrame frame;
 	 static boolean properties = false; //tells if properties menu is open
 	 static FloorPanel floorPanel;
+	 //public String _firstName;
+	public static String _resturantName, _firstName;
 	public static void main(String[] args) {
 		
 		frame = new JFrame("Restaurant Manager Genie");
@@ -75,28 +77,28 @@ public class Main {
        	}
        });
        
-   	String first_name = JOptionPane.showInputDialog("First Name");
+   	_firstName = JOptionPane.showInputDialog("First Name");
 	
 	//put user name on frame
 	JPanel usernamePanel=new JPanel();
 	usernamePanel.setSize(200,40);
 	 Color customColor = new Color(227,212,148);
 	 usernamePanel.setBackground(customColor);
-	JLabel usernameLabel = new JLabel("User: "+first_name);
+	JLabel usernameLabel = new JLabel("User: "+ _firstName);
 	usernamePanel.add(usernameLabel);
 	usernamePanel.setLocation(500,20);
 	
 	frame.getContentPane().add(usernamePanel,BorderLayout.CENTER);
 	
-	String restaurant_name;
-	restaurant_name=JOptionPane.showInputDialog("Restaurant Name");
+	//String restaurant_name;
+	_resturantName = JOptionPane.showInputDialog("Restaurant Name");
 	
 	//put restaurant name on frame
 	JPanel rnamePanel=new JPanel();
 	rnamePanel.setSize(200,40);
 	Color customColor2 = new Color(227,205,107);
 	rnamePanel.setBackground(customColor2);
-	JLabel rnameLabel = new JLabel("Restaurant Name: "+restaurant_name);
+	JLabel rnameLabel = new JLabel("Restaurant Name: "+ _resturantName);
 	rnamePanel.add(rnameLabel);
 	rnamePanel.setLocation(700, 20);
 	frame.getContentPane().add(rnamePanel,BorderLayout.CENTER);
