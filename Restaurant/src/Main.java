@@ -36,6 +36,7 @@ customers in a busy setting. Right-click the screen to
 A.Make a square table
 B.Make a circle table
 C.Change the background
+
 You can also:
 A.Right-click a table to change it texture. 
 B.Resize square tables by clicking and dragging the edges.
@@ -52,18 +53,7 @@ public class Main {
 		
 		frame = new JFrame("Restaurant Manager Genie");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getContentPane().setBackground(new Color(100,100,30));
-
        
-        //Sets the background frame image to darkwood
-        /*
-        try {
-    		frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("darkwood.jpg")))));
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-       */
-        
         
     	frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
